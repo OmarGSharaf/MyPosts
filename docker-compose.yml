@@ -3,4 +3,10 @@ services:
   backend:
     build: ./backend
     ports:
-      - '7192:7192'
+      - '7192:8080'
+  frontend:
+    build: ./frontend
+    ports:
+      - '7777:7777'
+    depends_on:
+      - backend
