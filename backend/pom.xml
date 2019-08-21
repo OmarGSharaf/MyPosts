@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.pharos</groupId>
-    <artifactId>MyPosts</artifactId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MyPosts</name>
+    <name>backend</name>
     <description>MyPosts is a small web application and backend for mobile application where users can sign in create
         public and private posts and see other public posts.
     </description>
