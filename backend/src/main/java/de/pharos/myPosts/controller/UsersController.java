@@ -27,6 +27,7 @@ public class UsersController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @CrossOrigin
     @PostMapping("/login")
     @ApiOperation("Authenticate users and generate Tokens")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDto loginDto)
@@ -44,6 +45,7 @@ public class UsersController {
         return ResponseEntity.ok(userService.generateToken(loginDto.getEmail()));
     }
 
+    @CrossOrigin
     @PostMapping("/register")
     @ApiOperation("Register a new user to the system")
     public ResponseEntity register(@Valid @RequestBody UserDto userDto) {
