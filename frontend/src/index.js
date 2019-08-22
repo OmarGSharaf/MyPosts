@@ -4,7 +4,6 @@ import VeeValidate from 'vee-validate';
 import { store } from './_store';
 import { router } from './_helpers';
 import App from './app/App';
-import Vuetify from './_helpers/vuetify'
 
 Vue.use(VeeValidate);
 
@@ -20,6 +19,5 @@ new Vue({
     el: '#app',
     router,
     store,
-    Vuetify,
     render: h => h(App)
 });
