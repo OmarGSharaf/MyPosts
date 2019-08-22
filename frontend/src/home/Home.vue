@@ -34,7 +34,7 @@
         methods: {
             ...mapActions('posts', {
                 getAllPosts: 'getAll',
-                deletePostr: 'delete'
+                deletePosts: 'delete'
             }),
         },
         mounted() {

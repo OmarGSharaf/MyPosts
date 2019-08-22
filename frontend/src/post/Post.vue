@@ -1,22 +1,32 @@
 <template>
     <div class="card">
-            <div class="post-module">
-                <div class="post-content">
-                    <h2 class="sub_title">{{this.body.user.name}}</h2>
-                    <p class="description">{{this.body.content}}</p>
-                    <div class="post-meta"><span class="timestamp">{{this.body.createdAt}}</span></div>
-                </div>
+        <div class="post-module">
+            <div class="post-content">
+                <h2 class="sub_title">{{this.body.user.name}}</h2>
+                <p class="description">{{this.body.content}}</p>
+                <div class="post-meta"><span class="timestamp">{{this.body.createdAt}}</span></div>
+                <button @click="deletePosts(body.id)">delete</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {mapState, mapActions} from 'vuex'
+
     export default {
         name: "Post",
         props: {
             body: Object
-        }
+        },
+        methods: {
+            ...mapActions('posts', {
+                getAllPosts: 'getAll',
+                deletePosts: 'delete'
+            }),
+        },
     }
+
 </script>
 
 <style>
@@ -137,5 +147,29 @@
         content: '';
         display: block;
         clear: both;
+    }
+
+    button {
+        float: right;
+        position: relative;
+        border-radius: 20px;
+        border: 1px solid #FF4B2B;
+        background-color: #FF4B2B;
+        color: #FFFFFF;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 10px 30px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: transform 80ms ease-in;
+        margin: -30px 0px 0px 0;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    button:focus {
+        outline: none;
     }
 </style>
