@@ -22,7 +22,7 @@ public class Post {
 
     private String status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private User user;
 
