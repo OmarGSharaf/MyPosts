@@ -4,9 +4,9 @@ import de.pharos.myPosts.dao.PostDao;
 import de.pharos.myPosts.dto.PostDto;
 import de.pharos.myPosts.exception.PostException;
 import de.pharos.myPosts.model.Post;
+import de.pharos.myPosts.model.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,14 +38,15 @@ public class PostService {
     }
 
     /**
-     * Find posts given a filter. A filter is created by creating an Example of Post.
+     * Find posts for a user given his JWT.
      *
-     * @param post     contain the example values.
      * @param pageable used for pagination and sorting.
+     * @param token    JSON Web Token (JWT).
      * @return page of users.
      */
-    public Page<Post> find(Post post, Pageable pageable) {
-        return postDao.findAll(Example.of(post), pageable);
+    public Page<Post> find(Pageable pageable, String token) {
+        User user = userService.findByToken(token);
+        return postDao.findAllByUser(user, pageable);
     }
 
     /**

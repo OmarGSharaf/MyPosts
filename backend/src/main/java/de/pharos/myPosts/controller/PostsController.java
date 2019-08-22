@@ -36,8 +36,9 @@ public class PostsController {
 
     @GetMapping
     @ApiOperation("Returns list of all posts in the system given a filter.")
-    public ResponseEntity index(Post post, Pageable pageable) {
-        Page<Post> posts = postService.find(post, pageable);
+    public ResponseEntity index(@RequestHeader("Authorization") @ApiParam(hidden = true) String token,
+                                Pageable pageable) {
+        Page<Post> posts = postService.find(pageable, token);
         return posts.isEmpty()
                 ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.ok(posts);
