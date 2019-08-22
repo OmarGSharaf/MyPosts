@@ -1,30 +1,8 @@
-import {postService} from '../_services';
+import {postService, userService} from '../_services';
+import {router} from "../_helpers";
 
 const state = {
-    all: [
-        {
-            id: "1",
-            content: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-            user: {
-                name: "banana"
-            },
-            createdAt: "asd"
-        }, {
-            id: "2",
-            content: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-            user: {
-                name: "banana"
-            },
-            createdAt: "asd"
-        }, {
-            id: "3",
-            content: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-            user: {
-                name: "banana"
-            },
-            createdAt: "asd"
-        }
-    ]
+    all: {}
 };
 
 const actions = {
@@ -35,6 +13,19 @@ const actions = {
             .then(
                 posts => commit('getAllSuccess', posts),
                 error => commit('getAllFailure', error)
+            );
+    },
+
+    post({dispatch, commit}, post) {
+
+        postService.post(post)
+            .then(post => {
+                postService.getAll()
+                    .then(
+                        posts => commit('getAllSuccess', posts),
+                        error => commit('getAllFailure', error)
+                    );
+                }
             );
     },
 

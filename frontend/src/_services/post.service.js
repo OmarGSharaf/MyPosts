@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export const postService = {
     getAll,
+    post,
     search,
     delete: _delete
 };
@@ -18,8 +19,15 @@ function getAll() {
         });
 }
 
+function post(post) {
+    return axios.post(`${config.BACKEND_BASE_URL}/v1/posts`, post, {headers: authHeader()})
+        .then(response => {
+            return response.data;
+        });
+}
+
 function search() {
-    return axios.get(`${config.BACKEND_BASE_URL}/v1/search`, {headers: authHeader()})
+    return axios.get(`${config.BACKEND_BASE_URL}/v1/posts/search`, {headers: authHeader()})
         .then(response => {
             return response.data;
         });
