@@ -10,7 +10,7 @@
             </div>
 
         </div>
-        <div v-for="post in all" :key="post.id">
+        <div v-for="post in all.items" :key="post.id">
             <post :body="post"></post>
         </div>
     </div>

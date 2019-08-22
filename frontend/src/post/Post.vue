@@ -4,7 +4,7 @@
                 <div class="post-content">
                     <h2 class="sub_title">{{this.body.user.name}}</h2>
                     <p class="description">{{this.body.content}}</p>
-                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i>{{this.body.createdAt}}</span></div>
+                    <div class="post-meta"><span class="timestamp">{{this.body.createdAt}}</span></div>
                 </div>
         </div>
     </div>

@@ -11,14 +11,17 @@ export const postService = {
 function getAll() {
     return axios.get(`${config.BACKEND_BASE_URL}/v1/posts`, {headers: authHeader()})
         .then(response => {
-            return response;
+            if (response.data.hasOwnProperty('content'))
+                return response.data.content;
+            else
+                return [];
         });
 }
 
 function search() {
     return axios.get(`${config.BACKEND_BASE_URL}/v1/search`, {headers: authHeader()})
         .then(response => {
-            return response;
+            return response.data;
         });
 }
 
