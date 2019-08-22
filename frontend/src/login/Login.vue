@@ -189,6 +189,12 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         transition: transform 80ms ease-in;
+        margin-top: 10px;
+    }
+
+    .invalid-feedback{
+        font-size: 12px;
+        color: #FF416C;
     }
 
     button:active {
