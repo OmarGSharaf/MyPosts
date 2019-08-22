@@ -24,6 +24,7 @@ public class PostsController {
     @Autowired
     private PostService postService;
 
+
     @GetMapping("/search")
     @ApiOperation("Searches for all public posts that contain a text.")
     public ResponseEntity search(String text, Pageable pageable) {
