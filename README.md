@@ -31,20 +31,20 @@ sudo apt install docker.io
 Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
 
 ```sh
-cd MyPosts
+cd backend
 docker build -t myposts .
 ```
 This will create the myposts image and pull in the necessary dependencies. 
 
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
+Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8080 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
 
 ```sh
-docker run -d -p 8000:8080 --restart="always" myposts
+docker run -d -p 8080:8080 --restart="always" myposts
 ```
 
 Verify the deployment by navigating to your server address in your preferred browser.
 
-`http://localhost:8000/`
+`http://localhost:8080/`
 
 ## JWT Authentication
 
@@ -71,7 +71,7 @@ curl -X POST "http://localhost:8080/v1/users/login" -H "accept: */*" -H "Content
 After authentication a JSON Web Token (JWT) is returned. The response should look as follow:
 ```
 {
-  "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A"
+"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A"
 }
 ```
 
@@ -114,6 +114,13 @@ Note: When using the swagger UI, the word `Bearer` should be added before the JW
 ```
 Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A
 ```
+## Frontend
+to run the frontend:
+```
+npm install
+npm start
+```
+Note: frontend is stil under development, the swagger UI is recommended for testing.
 
 ## Stack
 
@@ -124,9 +131,12 @@ MyPosts uses a number of open source projects to work properly:
 * [Spring boot] - java-based framework used to create a micro Service.
 * [H2] - a lightweight in-memory Java database.
 * [Swagger] - helps design, build, document, and consume RESTful Web services.
+* [Swagger] - helps design, build, document, and consume RESTful Web services.
+* [VueJs] - an open-source JavaScript framework for building user interfaces and single-page applications.
 
 [Docker]: <https://www.docker.com/>
 [Maven]: <https://maven.apache.org/>
 [Spring boot]: <https://spring.io/projects/spring-boot>
 [H2]: <https://www.h2database.com/html/main.html>
 [Swagger]: <https://swagger.io/>
+[VueJs]: <https://vuejs.org>
