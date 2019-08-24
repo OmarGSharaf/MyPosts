@@ -1,14 +1,16 @@
 <template>
-    <v-container>
+    <v-card outlined>
         <v-row no-gutters>
             <v-col>
-                <Login/>
+                <v-container>
+                    <Login/>
+                </v-container>
             </v-col>
             <v-col>
                 <Register/>
             </v-col>
         </v-row>
-    </v-container>
+    </v-card>
 </template>
 
 <script>
