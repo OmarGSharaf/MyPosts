@@ -1,18 +1,22 @@
 <template>
-    <v-container>
-        <v-row no-gutters>
-            <v-col>
-                <v-container class="px-12">
-                    <Login ref="login" @toggle="onLoginToggle"></Login>
-                </v-container>
-            </v-col>
-            <v-col>
-                <v-container class="px-12">
-                    <Register ref="register" @toggle="onRegisterToggle"></Register>
-                </v-container>
-            </v-col>
-        </v-row>
-    </v-container>
+    <v-content>
+        <v-layout align-center justify-center column fill-height>
+            <v-card width="770px" max-width="100%" min-height="480px">
+                <v-row no-gutters>
+                    <v-col>
+                        <v-card class="px-12">
+                            <Login ref="login" @toggle="onLoginToggle"></Login>
+                        </v-card>
+                    </v-col>
+                    <v-col>
+                        <v-flex class="px-12">
+                            <Register ref="register" @toggle="onRegisterToggle"></Register>
+                        </v-flex>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </v-layout>
+    </v-content>
 </template>
 
 <script>

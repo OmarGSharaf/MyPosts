@@ -1,8 +1,6 @@
 <template>
     <v-app>
-        <v-content>
-            <router-view></router-view>
-        </v-content>
+        <router-view></router-view>
     </v-app>
 </template>
 
@@ -14,3 +12,11 @@
         }),
     };
 </script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+    #app {
+        font-family: "Montserrat", Helvetica, Arial, sans-serif;
+    }
+</style>

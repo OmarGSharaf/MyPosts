@@ -15,7 +15,7 @@ const actions = {
             password: password
         };
 
-        return axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/login", user)
+        axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/login", user)
             .then(response => {
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data));
@@ -24,17 +24,13 @@ const actions = {
                     router.push('/');
                 }
             }).catch(error => {
-                commit('loginFailure', error);
-            });
-    },
-    logout({commit}) {
-        localStorage.removeItem('user');
-        commit('logout');
+            commit('loginFailure', error);
+        });
     },
     register({commit}, {user}) {
         commit('registerRequest', user);
 
-        return axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/register", user)
+        axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/register", user)
             .then(response => {
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data));
@@ -43,8 +39,12 @@ const actions = {
                     router.push('/home');
                 }
             }).catch(error => {
-                commit('registerFailure', error);
-            });
+            commit('registerFailure', error);
+        });
+    },
+    logout({commit}) {
+        localStorage.removeItem('user');
+        commit('logout');
     }
 };
 
