@@ -1,5 +1,5 @@
 import axios from 'axios';
-import router from '../router';
+import {router} from '../router';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user
@@ -13,7 +13,7 @@ const actions = {
         const user = {
             email: email,
             password: password
-        }
+        };
 
         return axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/login", user)
             .then(response => {
@@ -31,10 +31,10 @@ const actions = {
         localStorage.removeItem('user');
         commit('logout');
     },
-    register({commit}, user) {
+    register({commit}, {user}) {
         commit('registerRequest', user);
 
-        return axios.post(process.env.BACKEND_BASE_URL + "/v1/users/register", user)
+        return axios.post(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/users/register", user)
             .then(response => {
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data));

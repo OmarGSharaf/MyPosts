@@ -1,28 +1,14 @@
 <template>
-    <v-card outlined>
-        <v-row no-gutters>
-            <v-col>
-                <v-container>
-                    <Login/>
-                </v-container>
-            </v-col>
-            <v-col>
-                <Register/>
-            </v-col>
-        </v-row>
-    </v-card>
+    <v-app>
+        <v-content>
+            <router-view></router-view>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-    import Login from './components/Login';
-    import Register from './components/Register';
-
     export default {
         name: 'App',
-        components: {
-            Login,
-            Register
-        },
         data: () => ({
             //
         }),

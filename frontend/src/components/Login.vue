@@ -1,6 +1,6 @@
 <template>
-    <v-form ref="form" @submit.prevent="submit" lazy-validation>
-        <h1>Sign In</h1>
+    <v-form class="text-center" v-if="form.enabled" @submit.prevent="submit" lazy-validation>
+        <h1 class="text-center">Sign In</h1>
         <v-text-field
                 v-model="form.data.email"
                 v-validate="'required'"
@@ -24,9 +24,15 @@
                 :disabled="status.loggingIn"
                 :loading="status.loggingIn"
                 type="submit"
+                rounded
         >Sign In
         </v-btn>
     </v-form>
+    <div class="text-center" v-else>
+        <h1 class="text-center">Welcome Back!</h1>
+        <p class="text-center">To keep connected with us please login with your personal info</p>
+        <v-btn @click="toggle" rounded>Sign In</v-btn>
+    </div>
 </template>
 
 <script>
@@ -43,7 +49,8 @@
                     show: {
                         password: false,
                     },
-                    submitted: false
+                    submitted: false,
+                    enabled: true,
                 },
             }
         },
@@ -62,12 +69,12 @@
                     .then(valid => {
                         if (valid) {
                             this.login({email, password});
-                            this.clear();
                         }
                     });
             },
-            clear() {
-                this.$refs.form.reset();
+            toggle(emit) {
+                this.form.enabled = !this.form.enabled;
+                if (emit) this.$emit('toggle');
             }
         }
     };

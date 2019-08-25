@@ -1,5 +1,5 @@
 <template>
-    <v-form ref="form" @submit.prevent="submit" lazy-validation>
+    <v-form class="text-center" v-if="form.enabled" @submit.prevent="submit" lazy-validation>
         <h1>Create Account</h1>
         <v-text-field
                 v-model="form.data.name"
@@ -28,8 +28,8 @@
                 counter
         ></v-text-field>
         <v-text-field
-                v-model="form.data.confirm_password"
-                v-validate="'required|min:8|max:30|validate_password'"
+                v-model="form.data.confirmPassword"
+                v-validate="'required'"
                 :error-messages="errors.collect('confirm password')"
                 :type="'password'"
                 label="Password"
@@ -37,13 +37,21 @@
                 outlined
                 counter
         ></v-text-field>
-        <v-btn
-                :disabled="status.registering"
-                :loading="status.registering"
-                type="submit"
-        >Sign Up
-        </v-btn>
+        <div class="text-center">
+            <v-btn
+                    :disabled="status.registering"
+                    :loading="status.registering"
+                    type="submit"
+                    rounded
+            >Sign Up
+            </v-btn>
+        </div>
     </v-form>
+    <v-container class="text-center" v-else>
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <v-btn @click="toggle" rounded>Sign Up</v-btn>
+    </v-container>
 </template>
 
 <script>
@@ -57,14 +65,15 @@
                         name: '',
                         email: '',
                         password: '',
-                        confirm_password: ''
+                        confirmPassword: ''
                     },
                     show: {
                         password: false,
-                        confirm_password: false,
+                        confirmPassword: false,
                     },
-                    submitted: false
-                }
+                    submitted: false,
+                    enabled: false
+                },
             }
         },
         computed: {
@@ -77,16 +86,18 @@
             ...mapActions('account', ['register', 'logout']),
             submit() {
                 this.form.submitted = true;
+                const user = this.form.data;
                 this.$validator.validate()
                     .then(valid => {
                         if (valid) {
-                            this.register(this.form.data);
-                            this.clear();
+                            this.register({user});
+                            this.toggle();
                         }
                     });
             },
-            clear() {
-                this.$refs.form.reset();
+            toggle(emit) {
+                this.form.enabled = !this.form.enabled;
+                if (emit) this.$emit('toggle');
             }
         }
     };
