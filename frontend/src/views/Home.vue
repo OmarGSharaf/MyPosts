@@ -11,7 +11,7 @@
             </v-btn>
 
             <v-btn icon>
-                <v-icon @click="sheet=!sheet">mdi-pencil</v-icon>
+                <v-icon @click="$refs.publisher.togglePublisher()">mdi-pencil</v-icon>
             </v-btn>
 
             <v-menu left bottom>
@@ -33,49 +33,13 @@
         <v-content class="mt-12">
             <v-container fluid>
                 <div v-for="post in all.items" :key="post.id">
-                    <v-card class="mt-11 mx-auto" max-width="800" outlined>
-                        <v-list-item>
-                            <v-list-item-content>
-                                <v-btn @click="deletePosts(post.id)" absolute top right icon>
-                                    <v-icon>mdi-delete</v-icon>
-                                </v-btn>
-                                <v-list-item-title class="headline mb-1">{{post.user.name}}</v-list-item-title>
-                                <v-list-item-subtitle>@ {{post.createdAt}}</v-list-item-subtitle>
-                                <v-list-item-content>{{post.content}}</v-list-item-content>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-card>
+                    <post-card :post="post"></post-card>
                 </div>
             </v-container>
         </v-content>
 
         <v-footer class="pa-0" dark app>
-            <v-bottom-sheet v-model="sheet">
-                <template v-slot:activator="{ on }">
-                    <v-btn width="100%" color="deep-orange " dark v-on="on">create post</v-btn>
-                </template>
-                <v-sheet class="text-center" height="100px">
-                    <v-textarea
-                            v-model="newPost.data.content"
-                            clear-icon="mdi-close-circle"
-                            label="What's on your mind?"
-                            type="text"
-                            v-validate="'required'"
-                            :append-icon="marker ? 'mdi-lock-open' : 'mdi-lock'"
-                            :error-messages="errors.collect('post content')"
-                            data-vv-name="post content"
-                            filled
-                            solo-inverted
-                            clearabl
-                            no-resize
-                            rows="4"
-                            row-height="12"
-                            @click:append="toggleMarker"
-                            @click:clear="clearPost"
-                    ></v-textarea>
-                </v-sheet>
-                <v-btn @click="sendPost" color="green" dark>Publish</v-btn>
-            </v-bottom-sheet>
+            <publisher ref="publisher"></publisher>
         </v-footer>
     </v-app>
 </template>
@@ -83,67 +47,39 @@
 <script>
     import {mapState, mapActions} from 'vuex'
     import {router} from '../router';
+    import Post from '../components/Post';
+    import Publisher from '../components/Publisher'
 
     export default {
+        components: {
+            "post-card": Post,
+            "publisher": Publisher
+        },
         data() {
             return {
-                newPost: {
-                    data: {
-                        content: '',
-                        status: "PUBLIC"
-                    },
-                    submitted: false
-                },
                 options: ['New Post', 'Logout'],
-                marker: true,
-                sheet: false
+                searchText: ''
             }
         },
         computed: {
-            ...mapState('posts', ['all'])
+            ...mapState('posts', ['all']),
+            ...mapState('posts', ['search'])
         },
         methods: {
             ...mapActions('posts', {
                 getAllPosts: 'getAll',
-                createPost: 'createPost',
-                deletePosts: 'delete'
+                searchPosts: 'search',
             }),
-
-            toggleMarker() {
-                this.marker = !this.marker;
+            onSearch() {
+                this.searchPosts(this.searchText);
             },
-            sendPost() {
-                this.newPost.submitted = true;
-                const post = this.newPost.data;
-                this.$validator.validate()
-                    .then(valid => {
-                        if (valid) {
-                            this.marker ? post.status = 'PUBLIC' : post.status = 'PRIVATE';
-                            this.createPost({post});
-                            this.clearPost();
-                        }
-                    });
-            },
-            clearPost() {
-                this.sheet = false;
-                this.newPost = {
-                    data: {
-                        content: '',
-                        status: "PUBLIC"
-                    },
-                    submitted: false
-                };
-                this.$nextTick(() => {
-                    this.errors.clear();
-                    this.$nextTick(() => {
-                        this.$validator.reset();
-                    });
-                });
+            clearSearch() {
+                this.searchText = '';
             },
             handleMenu(key) {
                 switch (key) {
                     case 'New Post':
-                        this.sheet = !this.sheet;
+                        this.$refs.publisher.togglePublisher();
                         break;
                     case 'Logout':
                         router.push('/entry');

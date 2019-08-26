@@ -2,7 +2,13 @@ import axios from 'axios';
 import {authHeader} from './auth-header';
 
 const state = {
-    all: {}
+    all: {
+        items: [],
+        loading: false
+    },
+    search: {
+        items: []
+    }
 };
 
 const actions = {
@@ -24,15 +30,21 @@ const actions = {
                 commit('publishSuccess', response.data);
             });
     },
-    search({commit}) {
-        commit('getAllRequest');
+    search({commit}, searchText) {
+        commit('searchRequest');
 
-        return axios.get(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/posts", {headers: authHeader()})
+        axios.get(process.env.VUE_APP_BACKEND_BASE_URL + "/v1/posts/search", {
+            headers: authHeader(),
+            params: {
+                text: searchText
+            }
+        })
             .then(response => {
                 if (response.data.hasOwnProperty('content'))
-                    return response.data.content;
-                else
-                    return [];
+                    commit('searchSuccess', response.data.content);
+            })
+            .catch(error => {
+                commit('searchFailure', error);
             });
     },
     delete({commit}, id) {
@@ -50,16 +62,30 @@ const actions = {
 
 const mutations = {
     getAllRequest(state) {
-        state.all = {loading: true};
+        state.all.loading = true;
     },
     getAllSuccess(state, posts) {
-        state.all = {items: posts};
+        state.all.items = posts;
+        state.all.loading = false;
     },
     getAllFailure(state, error) {
-        state.all = {error};
+        state.all.error = error;
+        state.all.loading = false;
     },
-    publishSuccess(state, posts) {
-        state.all = {items: posts};
+    searchRequest(state) {
+        state.search.loading = true;
+    },
+    searchSuccess(state, posts) {
+        state.search.items = posts;
+        state.search.loading = false;
+    },
+    searchFailure(state, error) {
+        state.search.error = error;
+        state.search.loading = false;
+    },
+    publishSuccess(state, post) {
+        state.all.items.push(post);
+        state.all.loading = false;
     },
     deleteRequest(state, id) {
         state.all.items = state.all.items.map(post =>

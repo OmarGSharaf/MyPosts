@@ -1,40 +1,34 @@
 <template>
-    <v-content>
-        <v-layout align-center justify-center column fill-height>
-            <v-card width="770px" max-width="100%" min-height="480px">
-                <v-row no-gutters>
-                    <v-col>
-                        <v-card class="px-12">
-                            <Login ref="login" @toggle="onLoginToggle"></Login>
-                        </v-card>
-                    </v-col>
-                    <v-col>
-                        <v-flex class="px-12">
-                            <Register ref="register" @toggle="onRegisterToggle"></Register>
-                        </v-flex>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-layout>
-    </v-content>
+    <v-container relative fill-height class="container justify-center">
+        <v-card>
+            <v-layout row wrap>
+                <v-flex md6 fill-height>
+                    <v-container relative hidden class="px-11 ma-0" height="100%">
+                        <login-form ref="login" @toggle="onLoginToggle"></login-form>
+                    </v-container>
+                </v-flex>
+                <v-flex md6 fill-height>
+                    <v-container relative hidden class="px-11 ma-0" height="100%">
+                        <registration-form ref="registration" @toggle="onRegisterToggle"></registration-form>
+                    </v-container>
+                </v-flex>
+            </v-layout>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
     import Login from '../components/Login';
-    import Register from '../components/Register';
+    import Registration from '../components/Registration';
 
     export default {
-        name: 'App',
         components: {
-            Login,
-            Register
+            "login-form": Login,
+            "registration-form": Registration
         },
-        data: () => ({
-            //
-        }),
         methods: {
             onLoginToggle() {
-                this.$refs.register.toggle();
+                this.$refs.registration.toggle();
             },
             onRegisterToggle() {
                 this.$refs.login.toggle();
@@ -42,3 +36,11 @@
         }
     };
 </script>
+
+<style scoped>
+    .container {
+        width: 768px;
+        max-width: 100%;
+        min-height: 480px;
+    }
+</style>
