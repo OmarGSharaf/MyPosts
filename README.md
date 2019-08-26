@@ -81,7 +81,7 @@ curl -X GET "http://localhost:8080/v1/posts/search?text=string" -H "accept: */*"
 
 ####   Test credentials
 
-`email: test@pharos.de`
+`email: test@pharos-solutions.de`
 `password: Ph@ros-90F`
 
 ## API documentation

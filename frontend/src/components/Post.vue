@@ -2,7 +2,7 @@
     <v-card class="mt-11 mx-auto" max-width="800" outlined>
         <v-list-item>
             <v-list-item-content>
-                <v-dialog v-model="dialog" persistent max-width="350">
+                <v-dialog v-if="enableDelete" v-model="dialog" persistent max-width="350">
                     <template v-slot:activator="{ on }">
                         <v-btn v-on="on" absolute top right icon>
                             <v-icon>mdi-delete</v-icon>
@@ -32,7 +32,8 @@
     export default {
         name: "Post",
         props: {
-            post: Object
+            post: Object,
+            enableDelete: String
         },
         data() {
             return {

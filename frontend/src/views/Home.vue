@@ -34,7 +34,7 @@
             <search-dialog ref="searcher"></search-dialog>
             <v-container fluid>
                 <div v-for="post in all.items" :key="post.id">
-                    <post-card :post="post"></post-card>
+                    <post-card :post="post" enable-delete=true></post-card>
                 </div>
             </v-container>
         </v-content>
