@@ -5,34 +5,39 @@
 
 MyPosts is a small web application & backend for a mobile application where users can sign in, create public & private posts and see other users public posts.
 
-## Getting Started
+## Installation
 
-Docker is a containerization platform that is used to package MyPosts application and all its dependencies together in the form called a docker container to ensure that MyPosts works seamlessly in any environment. This environment might be a production or staging server. Docker pulls the dependencies needed for the application to run from the cloud and configures them automatically.
+##### MyPosts backend requires Maven v3+ to run.
 
-MyPosts consists of two main services, the frontend and the backend, each running on a different docker container. To manage, configure and maintain those containers Docker Compose is used on top of Docker.
-
-#### Prerequisites
-
-Download [Docker Desktop] for Mac or Windows. [Docker Compose] will be automatically installed. On Linux, make sure you have the latest version of [Compose].
-
-## Build and run with Docker Compose
-
-To build MyPosts simply run the following command in MyPosts root directory.
-
-```sh
-docker-compose build
+Install the maven dependencies:
 ```
-This will create the myposts_frontend and myposts_backend images and pull in the necessary dependencies. The configured port for the backend is 8080 and the configured port for the frontend is 7813. 
-
-To run MyPosts simple run the following command in MyPosts root directory.
-
-```sh
-docker-compose up
+cd backend
+mvn install
+mvn dependency:resolve
 ```
+Start the backend:
+```
+mvn spring-boot:run
+```
+The backend should start on port 8080
 
-To access and verify the deployment of the frontend, navigate to your server address in your preferred browser to:
+##### MyPosts frontend requires NPM v5+ to run.
 
-`http://localhost:7813/`
+Install the npm modules:
+```
+cd frontend
+npm install
+```
+Start the frontend:
+```
+npm run serve
+```
+The frontend should start on port 7813
+
+##   Test credentials
+
+`email: test@pharos-solutions.de`
+`password: Ph@ros-90F`
 
 ## JWT Authentication
 
@@ -69,8 +74,8 @@ In order to be able to publish a new post, the JSON Web Token (JWT) **must** be 
 ```
 curl -X POST "http://localhost:8080/v1/posts" -H "accept: */*" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A" -H "Content-Type: application/json" -d "{ \"content\": \"string\", \"status\": \"PUBLIC\"}"
 ```
-Note: Post content cannot be either null or empty, status is a string that should equal to either "PUBLIC" or "PRIVATE".
-
+##### Note: Post content cannot be either null or empty, status is a string that should equal to either "PUBLIC" or "PRIVATE".
+ 
 #### Searching public posts
 To search for a specified pattern in a post convent:
 
@@ -78,11 +83,7 @@ To search for a specified pattern in a post convent:
 curl -X GET "http://localhost:8080/v1/posts/search?text=string" -H "accept: */*" -H "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A"
 ```
 
-
-####   Test credentials
-
-`email: test@pharos-solutions.de`
-`password: Ph@ros-90F`
+##### Note: Tokens expires after 5 hours from the generation time 
 
 ## API documentation
 
@@ -107,20 +108,14 @@ Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQw
 
 MyPosts uses a number of open source projects to work properly:
 
-* [Docker] - makes it easier to create, deploy, and run applications by using containers. 
 * [Maven] - software project management and comprehension tool.
 * [Spring boot] - java-based framework used to create a micro Service.
 * [H2] - a lightweight in-memory Java database.
 * [Swagger] - helps design, build, document, and consume RESTful Web services.
-* [Swagger] - helps design, build, document, and consume RESTful Web services.
 * [VueJs] - an open-source JavaScript framework for building user interfaces and single-page applications.
 
-[Docker]: <https://www.docker.com/>
 [Maven]: <https://maven.apache.org/>
 [Spring boot]: <https://spring.io/projects/spring-boot>
 [H2]: <https://www.h2database.com/html/main.html>
 [Swagger]: <https://swagger.io/>
 [VueJs]: <https://vuejs.org>
-[Docker Desktop]: <https://www.docker.com/products/docker-desktop>
-[Docker Compose]: <https://docs.docker.com/compose/>
-[Compose]: <https://docs.docker.com/compose/install/>
