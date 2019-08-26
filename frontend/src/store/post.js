@@ -7,7 +7,8 @@ const state = {
         loading: false
     },
     search: {
-        items: []
+        items: [],
+        loading: false
     }
 };
 
@@ -42,6 +43,8 @@ const actions = {
             .then(response => {
                 if (response.data.hasOwnProperty('content'))
                     commit('searchSuccess', response.data.content);
+                else
+                    commit('searchSuccess', []);
             })
             .catch(error => {
                 commit('searchFailure', error);
@@ -57,6 +60,9 @@ const actions = {
             .catch(error => {
                 commit('deleteFailure', {id, error: error.toString()});
             });
+    },
+    clearSearch({commit}){
+        commit('clearSearch');
     }
 };
 
@@ -72,6 +78,10 @@ const mutations = {
         state.all.error = error;
         state.all.loading = false;
     },
+    clearAll(state) {
+        state.all.items = [];
+        state.all.loading = false;
+    },
     searchRequest(state) {
         state.search.loading = true;
     },
@@ -81,6 +91,10 @@ const mutations = {
     },
     searchFailure(state, error) {
         state.search.error = error;
+        state.search.loading = false;
+    },
+    clearSearch(state) {
+        state.search.items = [];
         state.search.loading = false;
     },
     publishSuccess(state, post) {

@@ -7,7 +7,7 @@
             <div class="flex-grow-1"></div>
 
             <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
+                <v-icon @click="$refs.searcher.toggle()">mdi-magnify</v-icon>
             </v-btn>
 
             <v-btn icon>
@@ -31,6 +31,7 @@
         </v-app-bar>
 
         <v-content class="mt-12">
+            <search-dialog ref="searcher"></search-dialog>
             <v-container fluid>
                 <div v-for="post in all.items" :key="post.id">
                     <post-card :post="post"></post-card>
@@ -49,11 +50,13 @@
     import {router} from '../router';
     import Post from '../components/Post';
     import Publisher from '../components/Publisher'
+    import Search from "../components/Search";
 
     export default {
         components: {
             "post-card": Post,
-            "publisher": Publisher
+            "publisher": Publisher,
+            "search-dialog": Search
         },
         data() {
             return {
