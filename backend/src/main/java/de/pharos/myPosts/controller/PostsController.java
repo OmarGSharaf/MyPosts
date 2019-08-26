@@ -27,8 +27,8 @@ public class PostsController {
 
     @GetMapping("/search")
     @ApiOperation("Searches for all public posts that contain a text.")
-    public ResponseEntity search(String text, Pageable pageable) {
-        Page<Post> posts = postService.search(text, pageable);
+    public ResponseEntity search(@RequestParam String text, Pageable pageable) {
+        Page<Post> posts = postService.search( text, pageable);
         return posts.isEmpty()
                 ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.ok(posts);

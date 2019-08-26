@@ -1,9 +1,5 @@
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
-
-import { store } from './_store';
-import { router } from './_helpers';
-import App from './app/App';
+import VeeValidate from "vee-validate";
 
 Vue.use(VeeValidate);
 
@@ -13,11 +9,4 @@ VeeValidate.Validator.extend('verify_password', {
         var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         return strongRegex.test(value);
     }
-});
-
-new Vue({
-    el: '#app',
-    router,
-    store,
-    render: h => h(App)
 });

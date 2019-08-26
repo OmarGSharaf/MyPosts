@@ -9,42 +9,30 @@ MyPosts is a small web application & backend for a mobile application where user
 
 Docker is a containerization platform that is used to package MyPosts application and all its dependencies together in the form called a docker container to ensure that MyPosts works seamlessly in any environment. This environment might be a production or staging server. Docker pulls the dependencies needed for the application to run from the cloud and configures them automatically.
 
-### Prerequisites
+MyPosts consists of two main services, the frontend and the backend, each running on a different docker container. To manage, configure and maintain those containers Docker Compose is used on top of Docker.
 
-#### macOS
+#### Prerequisites
 
-```
-$ brew update
-$ brew tap caskroom/cask
-$ brew cask install docker
-```
+Download [Docker Desktop] for Mac or Windows. [Docker Compose] will be automatically installed. On Linux, make sure you have the latest version of [Compose].
 
-#### Linux
+## Build and run with Docker Compose
 
-```
-sudo apt update
-sudo apt install docker.io
-```
-
-## Build and run with Docker
-
-Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
+To build MyPosts simply run the following command in MyPosts root directory.
 
 ```sh
-cd backend
-docker build -t myposts .
+docker-compose build
 ```
-This will create the myposts image and pull in the necessary dependencies. 
+This will create the myposts_frontend and myposts_backend images and pull in the necessary dependencies. The configured port for the backend is 8080 and the configured port for the frontend is 7813. 
 
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8080 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
+To run MyPosts simple run the following command in MyPosts root directory.
 
 ```sh
-docker run -d -p 8080:8080 --restart="always" myposts
+docker-compose up
 ```
 
-Verify the deployment by navigating to your server address in your preferred browser.
+To access and verify the deployment of the frontend, navigate to your server address in your preferred browser to:
 
-`http://localhost:8080/`
+`http://localhost:7813/`
 
 ## JWT Authentication
 
@@ -62,7 +50,7 @@ The following diagram shows this process:
 
 ## Testing
 
-### Login
+#### Login
 
 In order to authenticate the user, a POST request is sent to the login endpoint `/v1/users/login`, where the email and password are sent as a JSON object in the body:
 ```
@@ -75,7 +63,7 @@ After authentication a JSON Web Token (JWT) is returned. The response should loo
 }
 ```
 
-### Creating a new Post
+#### Creating a new Post
 
 In order to be able to publish a new post, the JSON Web Token (JWT) **must** be included in the headers as descibed in the JWT Athentication section:
 ```
@@ -83,7 +71,7 @@ curl -X POST "http://localhost:8080/v1/posts" -H "accept: */*" -H "Authorization
 ```
 Note: Post content cannot be either null or empty, status is a string that should equal to either "PUBLIC" or "PRIVATE".
 
-### Searching public posts
+#### Searching public posts
 To search for a specified pattern in a post convent:
 
 ```
@@ -91,9 +79,9 @@ curl -X GET "http://localhost:8080/v1/posts/search?text=string" -H "accept: */*"
 ```
 
 
-###   Test credentials
+####   Test credentials
 
-`email: test@pharos.de`
+`email: test@pharos-solutions.de`
 `password: Ph@ros-90F`
 
 ## API documentation
@@ -114,13 +102,6 @@ Note: When using the swagger UI, the word `Bearer` should be added before the JW
 ```
 Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHBoYXJvcy5kZSIsImV4cCI6MTU2NjM3MjQwMywiaWF0IjoxNTY2MzU0NDAzfQ.pnrYwU3F-37H_OmwXz9qzsmoZwWIC9sRA-mQGCgPYQ4svT0Uu_UWCPPXPLYBaBBCNVdl3Kg8wkMAQYL44elP4A
 ```
-## Frontend
-to run the frontend:
-```
-npm install
-npm start
-```
-Note: frontend is stil under development, the swagger UI is recommended for testing.
 
 ## Stack
 
@@ -140,3 +121,6 @@ MyPosts uses a number of open source projects to work properly:
 [H2]: <https://www.h2database.com/html/main.html>
 [Swagger]: <https://swagger.io/>
 [VueJs]: <https://vuejs.org>
+[Docker Desktop]: <https://www.docker.com/products/docker-desktop>
+[Docker Compose]: <https://docs.docker.com/compose/>
+[Compose]: <https://docs.docker.com/compose/install/>

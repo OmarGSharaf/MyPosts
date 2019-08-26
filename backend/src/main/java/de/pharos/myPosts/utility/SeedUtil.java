@@ -23,9 +23,9 @@ public class SeedUtil implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         User user1 = new User();
-        user1.setName("test");
+        user1.setName("test user");
         user1.setPassword(passwordEncoder.encode("Ph@ros-90F"));
-        user1.setEmail("test@pharos.de");
+        user1.setEmail("test@pharos-solutions.de");
         userDao.save(user1);
     }
 }
